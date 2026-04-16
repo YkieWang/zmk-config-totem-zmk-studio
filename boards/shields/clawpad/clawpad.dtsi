@@ -1,0 +1,40 @@
+#include "clawpad-layouts.dtsi"
+#include <dt-bindings/zmk/matrix_transform.h>
+
+/ {
+    chosen {
+        zmk,physical-layout = &clawpad_layout;
+        zmk,kscan = &kscan0;
+    };
+
+    default_transform: keymap_transform_0 {
+        compatible = "zmk,matrix-transform";
+        columns = <3>;
+        rows = <3>;
+//             | SW1 | SW2 | SW3 |
+//             | SW4 | SW5 | SW6 |
+//             | SW7 | SW8 | SW9 |
+        map = <
+            RC(0,0) RC(0,1) RC(0,2)
+            RC(1,0) RC(1,1) RC(1,2)
+            RC(2,0) RC(2,1) RC(2,2)
+        >;
+    };
+
+    kscan0: kscan_0 {
+        compatible = "zmk,kscan-gpio-matrix";
+        label = "KSCAN";
+
+        diode-direction = "col2row";
+        row-gpios
+            = <&xiao_d 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&xiao_d 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&xiao_d 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            ;
+        col-gpios
+            = <&xiao_d 4 GPIO_ACTIVE_HIGH>
+            , <&xiao_d 5 GPIO_ACTIVE_HIGH>
+            , <&xiao_d 10 GPIO_ACTIVE_HIGH>
+            ;
+    };
+};
